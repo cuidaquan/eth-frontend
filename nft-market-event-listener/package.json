@@ -1,0 +1,24 @@
+{
+  "name": "nft-market-event-listener",
+  "version": "1.0.0",
+  "description": "NFTMarket 合约事件监听器",
+  "type": "module",
+  "main": "listen-nft-market-events.js",
+  "scripts": {
+    "start": "node simple-market-listener.js",
+    "dev": "node --watch simple-market-listener.js"
+  },
+  "dependencies": {
+    "viem": "^2.21.0",
+    "dotenv": "^16.3.1"
+  },
+  "keywords": [
+    "nft",
+    "blockchain",
+    "ethereum",
+    "viem",
+    "event-listener"
+  ],
+  "author": "NFT Market Team",
+  "license": "MIT"
+}

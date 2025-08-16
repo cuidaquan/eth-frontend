@@ -1,0 +1,39 @@
+import { defineConfig } from '@wagmi/cli'
+import { react } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  out: 'src/generated.ts',
+  contracts: [
+    {
+      name: 'MultiSigWallet',
+      abi: [
+        {"type":"constructor","inputs":[{"name":"_owners","type":"address[]","internalType":"address[]"},{"name":"_required","type":"uint256","internalType":"uint256"}],"stateMutability":"nonpayable"},
+        {"type":"fallback","stateMutability":"payable"},
+        {"type":"receive","stateMutability":"payable"},
+        {"type":"function","name":"_executeCall","inputs":[{"name":"to","type":"address","internalType":"address"},{"name":"value","type":"uint256","internalType":"uint256"},{"name":"data","type":"bytes","internalType":"bytes"}],"outputs":[{"name":"","type":"bytes","internalType":"bytes"}],"stateMutability":"nonpayable"},
+        {"type":"function","name":"confirmTransaction","inputs":[{"name":"txId","type":"uint256","internalType":"uint256"}],"outputs":[],"stateMutability":"nonpayable"},
+        {"type":"function","name":"confirmationCount","inputs":[{"name":"","type":"uint256","internalType":"uint256"}],"outputs":[{"name":"","type":"uint256","internalType":"uint256"}],"stateMutability":"view"},
+        {"type":"function","name":"confirmations","inputs":[{"name":"","type":"uint256","internalType":"uint256"},{"name":"","type":"address","internalType":"address"}],"outputs":[{"name":"","type":"bool","internalType":"bool"}],"stateMutability":"view"},
+        {"type":"function","name":"executeTransaction","inputs":[{"name":"txId","type":"uint256","internalType":"uint256"}],"outputs":[],"stateMutability":"nonpayable"},
+        {"type":"function","name":"getBalance","inputs":[],"outputs":[{"name":"","type":"uint256","internalType":"uint256"}],"stateMutability":"view"},
+        {"type":"function","name":"getConfirmations","inputs":[{"name":"txId","type":"uint256","internalType":"uint256"}],"outputs":[{"name":"_confirmations","type":"address[]","internalType":"address[]"}],"stateMutability":"view"},
+        {"type":"function","name":"getOwners","inputs":[],"outputs":[{"name":"","type":"address[]","internalType":"address[]"}],"stateMutability":"view"},
+        {"type":"function","name":"getTransaction","inputs":[{"name":"txId","type":"uint256","internalType":"uint256"}],"outputs":[{"name":"to","type":"address","internalType":"address"},{"name":"value","type":"uint256","internalType":"uint256"},{"name":"data","type":"bytes","internalType":"bytes"},{"name":"status","type":"uint8","internalType":"enum MultiSigWallet.TransactionStatus"},{"name":"confirmationCount_","type":"uint256","internalType":"uint256"},{"name":"timestamp","type":"uint256","internalType":"uint256"}],"stateMutability":"view"},
+        {"type":"function","name":"getTransactionCount","inputs":[],"outputs":[{"name":"","type":"uint256","internalType":"uint256"}],"stateMutability":"view"},
+        {"type":"function","name":"isConfirmed","inputs":[{"name":"txId","type":"uint256","internalType":"uint256"},{"name":"owner","type":"address","internalType":"address"}],"outputs":[{"name":"","type":"bool","internalType":"bool"}],"stateMutability":"view"},
+        {"type":"function","name":"isOwner","inputs":[{"name":"","type":"address","internalType":"address"}],"outputs":[{"name":"","type":"bool","internalType":"bool"}],"stateMutability":"view"},
+        {"type":"function","name":"owners","inputs":[{"name":"","type":"uint256","internalType":"uint256"}],"outputs":[{"name":"","type":"address","internalType":"address"}],"stateMutability":"view"},
+        {"type":"function","name":"required","inputs":[],"outputs":[{"name":"","type":"uint256","internalType":"uint256"}],"stateMutability":"view"},
+        {"type":"function","name":"revokeConfirmation","inputs":[{"name":"txId","type":"uint256","internalType":"uint256"}],"outputs":[],"stateMutability":"nonpayable"},
+        {"type":"function","name":"submitTransaction","inputs":[{"name":"to","type":"address","internalType":"address"},{"name":"value","type":"uint256","internalType":"uint256"},{"name":"data","type":"bytes","internalType":"bytes"}],"outputs":[{"name":"txId","type":"uint256","internalType":"uint256"}],"stateMutability":"nonpayable"},
+        {"type":"function","name":"transactions","inputs":[{"name":"","type":"uint256","internalType":"uint256"}],"outputs":[{"name":"to","type":"address","internalType":"address"},{"name":"value","type":"uint256","internalType":"uint256"},{"name":"data","type":"bytes","internalType":"bytes"},{"name":"status","type":"uint8","internalType":"enum MultiSigWallet.TransactionStatus"},{"name":"timestamp","type":"uint256","internalType":"uint256"}],"stateMutability":"view"},
+        {"type":"event","name":"Deposit","inputs":[{"name":"sender","type":"address","indexed":true,"internalType":"address"},{"name":"value","type":"uint256","indexed":false,"internalType":"uint256"},{"name":"balance","type":"uint256","indexed":false,"internalType":"uint256"}],"anonymous":false},
+        {"type":"event","name":"TransactionConfirmed","inputs":[{"name":"txId","type":"uint256","indexed":true,"internalType":"uint256"},{"name":"confirmer","type":"address","indexed":true,"internalType":"address"},{"name":"confirmations","type":"uint256","indexed":false,"internalType":"uint256"}],"anonymous":false},
+        {"type":"event","name":"TransactionExecuted","inputs":[{"name":"txId","type":"uint256","indexed":true,"internalType":"uint256"},{"name":"executor","type":"address","indexed":true,"internalType":"address"},{"name":"success","type":"bool","indexed":false,"internalType":"bool"},{"name":"returnData","type":"bytes","indexed":false,"internalType":"bytes"}],"anonymous":false},
+        {"type":"event","name":"TransactionRevoked","inputs":[{"name":"txId","type":"uint256","indexed":true,"internalType":"uint256"},{"name":"revoker","type":"address","indexed":true,"internalType":"address"},{"name":"confirmations","type":"uint256","indexed":false,"internalType":"uint256"}],"anonymous":false},
+        {"type":"event","name":"TransactionSubmitted","inputs":[{"name":"txId","type":"uint256","indexed":true,"internalType":"uint256"},{"name":"submitter","type":"address","indexed":true,"internalType":"address"},{"name":"to","type":"address","indexed":true,"internalType":"address"},{"name":"value","type":"uint256","indexed":false,"internalType":"uint256"},{"name":"data","type":"bytes","indexed":false,"internalType":"bytes"}],"anonymous":false}
+      ] as const,
+    },
+  ],
+  plugins: [react()],
+})

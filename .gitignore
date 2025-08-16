@@ -1,0 +1,12 @@
+multisig-wallet-frontend/node_modules/
+nft-market-event-listener/.env
+bank-frontend/.env
+bank-frontend/package-lock.json
+multisig-wallet-frontend/.env
+multisig-wallet-frontend/.env.example
+nft-market-front/.env.example
+token-bank-front/.env.example
+token-bank-front/.env.local
+viem-cli-wallet/.env
+viem-cli-wallet/package-lock.json
+token-bank-front/package-lock.json

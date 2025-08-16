@@ -1,0 +1,16 @@
+{
+  "framework": "vite",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "installCommand": "npm install",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ],
+  "env": {
+    "VITE_MORALIS_API_KEY": "@moralis_api_key",
+    "VITE_WALLETCONNECT_PROJECT_ID": "@walletconnect_project_id"
+  }
+}
