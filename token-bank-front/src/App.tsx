@@ -12,6 +12,7 @@ function App() {
     error: txError,
     success: txSuccess,
     deposit,
+    depositWithPermit2,
     withdraw,
     mint,
     clearMessage
@@ -32,11 +33,25 @@ function App() {
     }
   }, [txSuccess, txError, clearMessage])
 
+
+
+
+
   const handleDeposit = async () => {
     if (!depositAmount) return
     await deposit(depositAmount)
     setDepositAmount('')
   }
+
+  const handlePermit2Deposit = async () => {
+    if (!depositAmount) return
+    await depositWithPermit2(depositAmount)
+    setDepositAmount('')
+  }
+
+
+
+
 
   const handleWithdraw = async () => {
     if (!withdrawAmount) return
@@ -122,7 +137,7 @@ function App() {
                 <div className="loading">加载数据中...</div>
               ) : (
                 <>
-                  <div className="balance-grid">
+                  <div className="balance-grid" style={{ gridTemplateColumns: 'repeat(2, 1fr)' }}>
                     <div className="balance-item">
                       <h3>Token 余额</h3>
                       <div className="amount">
@@ -203,13 +218,34 @@ function App() {
                           min="0"
                         />
                       </div>
-                      <button
-                        onClick={handleDeposit}
-                        disabled={txLoading || !depositAmount}
-                        className="action-button deposit-button"
-                      >
-                        {txLoading ? '处理中...' : '存款'}
-                      </button>
+                      <div style={{ display: 'flex', gap: '10px', flexDirection: 'column' }}>
+                        <button
+                          onClick={handleDeposit}
+                          disabled={txLoading || !depositAmount}
+                          className="action-button deposit-button"
+                        >
+                          {txLoading ? '处理中...' : '普通存款'}
+                        </button>
+                        <button
+                          onClick={handlePermit2Deposit}
+                          disabled={txLoading || !depositAmount}
+                          className="action-button"
+                          style={{
+                            background: '#28a745',
+                            borderColor: '#28a745'
+                          }}
+                        >
+                          {txLoading ? '处理中...' : 'Permit2 存款'}
+                        </button>
+                      </div>
+                      <div style={{ fontSize: '0.8rem', marginTop: '8px' }}>
+                        <p style={{ color: '#666', marginBottom: '4px' }}>
+                          💡 Permit2 存款使用签名授权，更安全便捷
+                        </p>
+                        <p style={{ color: '#f39c12', fontSize: '0.75rem' }}>
+                          ⚠️ 首次使用需要授权最大值给 Permit2（一次性操作，后续无需再授权）
+                        </p>
+                      </div>
                     </div>
 
                     <div className="action-section">

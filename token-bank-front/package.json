@@ -9,9 +9,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "viem": "^2.21.45",
+    "@uniswap/permit2-sdk": "^1.4.0",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "tslib": "^2.8.1",
+    "viem": "^2.21.45"
   },
   "devDependencies": {
     "@types/react": "^18.3.12",

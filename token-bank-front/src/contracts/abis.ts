@@ -1,9 +1,39 @@
-// TokenBank 合约 ABI
+// TokenBank 合约 ABI（包含 Permit2 支持）
 export const TOKEN_BANK_ABI = [
   {
     "type": "constructor",
-    "inputs": [{"name": "_token", "type": "address", "internalType": "address"}],
+    "inputs": [
+      {"name": "_token", "type": "address", "internalType": "address"},
+      {"name": "_permit2", "type": "address", "internalType": "address"}
+    ],
     "stateMutability": "nonpayable"
+  },
+  {
+    "type": "event",
+    "name": "Deposit",
+    "inputs": [
+      {"name": "user", "type": "address", "indexed": true, "internalType": "address"},
+      {"name": "amount", "type": "uint256", "indexed": false, "internalType": "uint256"}
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "Permit2Deposit",
+    "inputs": [
+      {"name": "user", "type": "address", "indexed": true, "internalType": "address"},
+      {"name": "amount", "type": "uint256", "indexed": false, "internalType": "uint256"}
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "Withdraw",
+    "inputs": [
+      {"name": "user", "type": "address", "indexed": true, "internalType": "address"},
+      {"name": "amount", "type": "uint256", "indexed": false, "internalType": "uint256"}
+    ],
+    "anonymous": false
   },
   {
     "type": "function",
@@ -16,6 +46,34 @@ export const TOKEN_BANK_ABI = [
     "type": "function",
     "name": "deposit",
     "inputs": [{"name": "amount", "type": "uint256", "internalType": "uint256"}],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "depositWithPermit2",
+    "inputs": [
+      {
+        "name": "permitTransfer",
+        "type": "tuple",
+        "internalType": "struct IPermit2.PermitTransferFrom",
+        "components": [
+          {
+            "name": "permitted",
+            "type": "tuple",
+            "internalType": "struct IPermit2.TokenPermissions",
+            "components": [
+              {"name": "token", "type": "address", "internalType": "address"},
+              {"name": "amount", "type": "uint256", "internalType": "uint256"}
+            ]
+          },
+          {"name": "nonce", "type": "uint256", "internalType": "uint256"},
+          {"name": "deadline", "type": "uint256", "internalType": "uint256"}
+        ]
+      },
+      {"name": "owner", "type": "address", "internalType": "address"},
+      {"name": "signature", "type": "bytes", "internalType": "bytes"}
+    ],
     "outputs": [],
     "stateMutability": "nonpayable"
   },
@@ -35,10 +93,28 @@ export const TOKEN_BANK_ABI = [
   },
   {
     "type": "function",
+    "name": "permit2",
+    "inputs": [],
+    "outputs": [{"name": "", "type": "address", "internalType": "contract IPermit2"}],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
     "name": "token",
     "inputs": [],
     "outputs": [{"name": "", "type": "address", "internalType": "contract ExtendedERC20"}],
     "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "tokensReceived",
+    "inputs": [
+      {"name": "from", "type": "address", "internalType": "address"},
+      {"name": "amount", "type": "uint256", "internalType": "uint256"},
+      {"name": "data", "type": "bytes", "internalType": "bytes"}
+    ],
+    "outputs": [{"name": "", "type": "bool", "internalType": "bool"}],
+    "stateMutability": "nonpayable"
   },
   {
     "type": "function",
@@ -48,22 +124,24 @@ export const TOKEN_BANK_ABI = [
     "stateMutability": "nonpayable"
   },
   {
-    "type": "event",
-    "name": "Deposit",
-    "inputs": [
-      {"name": "user", "type": "address", "indexed": true, "internalType": "address"},
-      {"name": "amount", "type": "uint256", "indexed": false, "internalType": "uint256"}
-    ],
-    "anonymous": false
+    "type": "error",
+    "name": "InvalidSigner",
+    "inputs": []
   },
   {
-    "type": "event",
-    "name": "Withdraw",
-    "inputs": [
-      {"name": "user", "type": "address", "indexed": true, "internalType": "address"},
-      {"name": "amount", "type": "uint256", "indexed": false, "internalType": "uint256"}
-    ],
-    "anonymous": false
+    "type": "error",
+    "name": "SignatureExpired",
+    "inputs": [{"name": "signatureDeadline", "type": "uint256", "internalType": "uint256"}]
+  },
+  {
+    "type": "error",
+    "name": "InvalidNonce",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "InsufficientAllowance",
+    "inputs": []
   }
 ] as const
 

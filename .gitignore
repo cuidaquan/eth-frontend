@@ -10,3 +10,7 @@ token-bank-front/.env.local
 viem-cli-wallet/.env
 viem-cli-wallet/package-lock.json
 token-bank-front/package-lock.json
+token-bank-front/node_modules/
+token-bank-front/build/
+token-bank-front/dist/
+tmp/
