@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useWallet } from './hooks/useWallet'
 import { useTokenBank } from './hooks/useTokenBank'
+import { Transfers } from './components/Transfers'
 
 function App() {
   const { isConnected, address, connect, disconnect, isConnecting, error: walletError } = useWallet()
@@ -272,6 +273,9 @@ function App() {
                   </div>
                 </>
               )}
+
+              {/* 转账记录组件 */}
+              <Transfers address={address} />
             </div>
           )}
         </div>

@@ -14,3 +14,6 @@ token-bank-front/node_modules/
 token-bank-front/build/
 token-bank-front/dist/
 tmp/
+erc20-transfer-indexer/node_modules/
+erc20-transfer-indexer/package-lock.json
+erc20-transfer-indexer/.env.local

@@ -45,42 +45,13 @@ export function useTokenBank() {
     success: null
   })
   const [contractAddresses, setContractAddresses] = useState<ContractAddresses>({
-    tokenAddress: null,
-    permit2Address: null
+    tokenAddress: CONTRACTS.TOKEN,
+    permit2Address: CONTRACTS.PERMIT2
   })
 
-  // 获取合约地址
-  const fetchContractAddresses = async () => {
-    if (!publicClient) return
+  // 合约地址现在直接从配置获取，无需动态查询
 
-    try {
-      const [tokenAddress, permit2Address] = await Promise.all([
-        // 从 TokenBank 合约获取 token 地址
-        publicClient.readContract({
-          address: CONTRACTS.TOKEN_BANK,
-          abi: TOKEN_BANK_ABI,
-          functionName: 'token',
-          args: []
-        }),
-        // 从 TokenBank 合约获取 permit2 地址
-        publicClient.readContract({
-          address: CONTRACTS.TOKEN_BANK,
-          abi: TOKEN_BANK_ABI,
-          functionName: 'permit2',
-          args: []
-        })
-      ])
-
-      setContractAddresses({
-        tokenAddress: tokenAddress as `0x${string}`,
-        permit2Address: permit2Address as `0x${string}`
-      })
-    } catch (error) {
-      console.error('获取合约地址失败:', error)
-    }
-  }
-
-  // 读取合约数据
+  // 读取合约数据（添加错误处理，避免频繁调用）
   const fetchData = async () => {
     if (!address || !publicClient || !contractAddresses.tokenAddress) return
 
@@ -109,8 +80,17 @@ export function useTokenBank() {
         bankBalance: formatEther(bankBalance as bigint),
         isLoading: false
       })
-    } catch (error) {
+    } catch (error: any) {
       console.error('获取数据失败:', error)
+
+      // 如果是429错误，设置错误信息但不重试
+      if (error.status === 429 || error.message?.includes('Too Many Requests')) {
+        setTxState(prev => ({
+          ...prev,
+          error: 'RPC请求过多，请稍后再试。转账记录通过后端API获取，不受影响。'
+        }))
+      }
+
       setData(prev => ({ ...prev, isLoading: false }))
     }
   }
@@ -311,17 +291,17 @@ export function useTokenBank() {
     setTxState(prev => ({ ...prev, error: null, success: null }))
   }
 
-  // 初始化合约地址
-  useEffect(() => {
-    if (publicClient) {
-      fetchContractAddresses()
-    }
-  }, [publicClient])
+  // 合约地址已在初始化时设置，无需动态获取
 
-  // 当连接状态或地址变化时重新获取数据
+  // 当连接状态或地址变化时重新获取数据（添加防抖，避免频繁调用）
   useEffect(() => {
     if (isConnected && address && contractAddresses.tokenAddress) {
-      fetchData()
+      // 延迟执行，避免频繁调用
+      const timer = setTimeout(() => {
+        fetchData()
+      }, 1000)
+
+      return () => clearTimeout(timer)
     } else if (!isConnected) {
       // 断开连接时清除数据
       setData({
