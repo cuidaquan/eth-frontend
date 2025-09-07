@@ -13,19 +13,18 @@ const contractAddress = '0x195083445074acfd59d627b9a7b76988c578304d';
 async function readLocksArray() {
   try {
     // The _locks array is at storage slot 0
-    // Array length is stored at keccak256(0)
-    const arrayLengthSlot = keccak256(toHex(0, { size: 32 }));
+    // For dynamic arrays, the length is stored directly at the slot
     const lengthHex = await client.getStorageAt({
       address: contractAddress,
-      slot: arrayLengthSlot
+      slot: '0x0'  // slot 0 for the first state variable
     });
     
     const arrayLength = hexToNumber(lengthHex);
-    console.log(`Array length from storage: ${arrayLength}`);
+    console.log(`Found ${arrayLength} locks in the array\n`);
     
-    // According to the constructor, there should be 11 elements
-    const actualLength = 11;
-    console.log(`Reading ${actualLength} locks from the array\n`);
+    // Array elements are stored starting from keccak256(0)
+    const arrayLengthSlot = keccak256(toHex(0, { size: 32 }));
+    const actualLength = arrayLength;
 
     // Read each lock
     for (let i = 0; i < actualLength; i++) {

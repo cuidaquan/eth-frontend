@@ -1,10 +1,9 @@
-PS C:\Work\Web3\eth-frontend\esrnt-reader> npm start            
+PS C:\Work\Web3\eth-frontend\esrnt-reader> npm start
 
 > esrnt-reader@1.0.0 start
 > node index.js
 
-Array length from storage: 5.136353114777713e+57
-Reading 11 locks from the array
+Found 11 locks in the array
 
 locks[0]: user: 0x0000000000000000000000000000000000000001, startTime: 3514435416 (2081-05-14T08:03:36.000Z), amount: 1 ETH
 locks[1]: user: 0x0000000000000000000000000000000000000002, startTime: 3514435415 (2081-05-14T08:03:35.000Z), amount: 2 ETH
@@ -17,4 +16,3 @@ locks[7]: user: 0x0000000000000000000000000000000000000008, startTime: 351443540
 locks[8]: user: 0x0000000000000000000000000000000000000009, startTime: 3514435408 (2081-05-14T08:03:28.000Z), amount: 9 ETH
 locks[9]: user: 0x000000000000000000000000000000000000000a, startTime: 3514435407 (2081-05-14T08:03:27.000Z), amount: 10 ETH
 locks[10]: user: 0x000000000000000000000000000000000000000b, startTime: 3514435406 (2081-05-14T08:03:26.000Z), amount: 11 ETH
-PS C:\Work\Web3\eth-frontend\esrnt-reader> 
