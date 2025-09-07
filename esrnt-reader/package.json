@@ -1,0 +1,11 @@
+{
+  "name": "esrnt-reader",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "viem": "^2.0.0"
+  }
+}

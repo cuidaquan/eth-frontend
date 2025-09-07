@@ -17,3 +17,6 @@ tmp/
 erc20-transfer-indexer/node_modules/
 erc20-transfer-indexer/package-lock.json
 erc20-transfer-indexer/.env.local
+.claude/
+esrnt-reader/node_modules/
+esrnt-reader/package-lock.json
